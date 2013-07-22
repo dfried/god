@@ -1021,6 +1021,8 @@ from_email      - The String email address from which the email will be sent.
 from_name       - The String name corresponding to the sender.
 delivery_method - The Symbol delivery method. [ :smtp | :sendmail ]
                   (default: :smtp).
+subject_tag     - The String that will appear at the beginning of the subject in square brackets.
+                  (default: 'god')
 
 === SMTP Options (when delivery_method = :smtp) ===
 server_host     - The String hostname of the SMTP server (default: localhost).

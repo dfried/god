@@ -5,6 +5,7 @@
 # from_email      - The String email address from which the email will be sent.
 # from_name       - The String name corresponding to the sender.
 # delivery_method - The Symbol delivery method. [ :smtp | :sendmail ]
+# subject tag     - The tag to appear at the beginning of the subject line.
 #                   (default: :smtp).
 #
 # === SMTP Options (when delivery_method = :smtp) ===
@@ -37,7 +38,7 @@ module God
         attr_accessor :to_email, :to_name, :from_email, :from_name,
                       :delivery_method, :server_host, :server_port,
                       :server_auth, :server_domain, :server_user,
-                      :server_password, :sendmail_path, :sendmail_args
+                      :server_password, :sendmail_path, :sendmail_args, :subject_tag
         attr_accessor :format
       end
 
@@ -49,12 +50,13 @@ module God
       self.server_port = 25
       self.sendmail_path = '/usr/sbin/sendmail'
       self.sendmail_args = '-i -t'
+      self.subject_tag = 'god'
 
-      self.format = lambda do |name, from_email, from_name, to_email, to_name, message, time, priority, category, host|
+      self.format = lambda do |name, from_email, from_name, to_email, to_name, message, time, priority, category, host, subject_tag|
         <<-EOF
 From: #{from_name} <#{from_email}>
 To: #{to_name || name} <#{to_email}>
-Subject: [god] #{message}
+Subject: [#{subject_tag}] #{message}
 Date: #{time.httpdate}
 Message-Id: <#{rand(1000000000).to_s(36)}.#{$$}.#{from_email}>
 
@@ -68,7 +70,7 @@ Category: #{category}
       attr_accessor :to_email, :to_name, :from_email, :from_name,
                     :delivery_method, :server_host, :server_port,
                     :server_auth, :server_domain, :server_user,
-                    :server_password, :sendmail_path, :sendmail_args
+                    :server_password, :sendmail_path, :sendmail_args, :subject_tag
 
       def valid?
         valid = true
