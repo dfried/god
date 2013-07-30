@@ -4,6 +4,7 @@ class TestEmail < Test::Unit::TestCase
   def setup
     God::Contacts::Email.to_email = 'dev@example.com'
     God::Contacts::Email.from_email = 'god@example.com'
+    God::Contacts::Email.subject_tag = 'god'
     @email = God::Contacts::Email.new
   end
 

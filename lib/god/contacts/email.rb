@@ -4,9 +4,9 @@
 # to_name         - The String name corresponding to the recipient.
 # from_email      - The String email address from which the email will be sent.
 # from_name       - The String name corresponding to the sender.
-# delivery_method - The Symbol delivery method. [ :smtp | :sendmail ]
-# subject tag     - The tag to appear at the beginning of the subject line.
-#                   (default: :smtp).
+# delivery_method - The Symbol delivery method. [ :smtp | :sendmail ] (default: :smtp)
+# subject_tag     - The tag to appear at the beginning of the subject line.
+#                   (default: 'god').
 #
 # === SMTP Options (when delivery_method = :smtp) ===
 # server_host     - The String hostname of the SMTP server (default: localhost).
@@ -91,7 +91,7 @@ Category: #{category}
       def notify(message, time, priority, category, host)
         body = Email.format.call(self.name, arg(:from_email), arg(:from_name),
                                  arg(:to_email), arg(:to_name), message, time,
-                                 priority, category, host)
+                                 priority, category, host, subject_tag)
 
         case arg(:delivery_method)
           when :smtp
